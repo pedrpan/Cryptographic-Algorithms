@@ -33,7 +33,7 @@ int getkeylen(char s[], int x){
 }
 
 double getfreqsqred(char t[]){
-  int chrcount[26];
+  double chrcount[26];
   int j = 0;
   int i, k;
   double x = 0.0;
@@ -45,5 +45,5 @@ double getfreqsqred(char t[]){
       chrcount[i]+=1;
   for (k=0; k < 26; ++k)
     x += (chrcount[k] / j) * (chrcount[k] / j);
-  return x;
+  return x>0 ? x : -x ;
 }
