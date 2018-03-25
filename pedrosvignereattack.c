@@ -66,6 +66,51 @@ double getfreq(char t[]){
   return x>0 ? x : -x ;
 }
 
+double getfreqtwo(char t[]){
+  double chrcount[ALPSIZE];
+  int j = 0;
+  int i, k;
+  double y = 0.0;
+  double x[26];
+  x[0] =0.08167;
+  x[1] =0.01492;
+  x[2] =0.02782;
+  x[3] =0.04253;
+  x[4] =0.12702;
+  x[5] =0.02228;
+  x[6] =0.02015;
+  x[7] =0.06094;
+  x[8] =0.06966;
+  x[9] =0.00153;
+  x[10] =0.00772;
+  x[11] =0.04025;
+  x[12] =0.02406;
+  x[13] =0.06749;
+  x[14] =0.07507;
+  x[15] =0.01929;
+  x[16] =0.00095;
+  x[17] =0.05987;
+  x[18] =0.06327;
+  x[19] =0.09056;
+  x[20] =0.02758;
+  x[21] =0.00978;
+  x[22] =0.02360;
+  x[23] =0.00150;
+  x[24] =0.01974;
+  x[25] =0.00074;
+
+  for (k=0; k < ALPSIZE; ++k)
+    chrcount[k]=0;
+
+  while (t[j] != '\0')
+    if ((i = t[j++] - 'a') >= 0 && i <= ALPSIZE - 1)
+      chrcount[i]+=1;
+  for (k=0; k < ALPSIZE; ++k)
+    y += (chrcount[k] / j) * (chrcount[k] / j);
+  y -= 0.065497;
+  return x>0 ? x : -x ;
+}
+
 void getkey(char a[], char b[], int c, int d){
   int i, j, k, l, m, x, best;
   char buff[d / c + 1];
@@ -83,7 +128,7 @@ void getkey(char a[], char b[], int c, int d){
       for (l=0; l<m; ++l)
         search[l] = (((buff[l] - 'a') + k) % ALPSIZE) + 'a';
       search[++l]='\0';
-      if ((currentfreq = getfreq(search)) < bestfreq)
+      if ((currentfreq = getfreqtwo(search)) < bestfreq)
         bestfreq = currentfreq, best = k;
     }
     a[i] = 'a' + best;
