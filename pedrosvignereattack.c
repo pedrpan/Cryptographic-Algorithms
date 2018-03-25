@@ -34,16 +34,18 @@ main()
 
 int getkeylen(char s[], int x){
   int t, j, best;
-  char search[x];
+  char searchkey[x+1];
+  char search[x+1];
   double currentfreq, bestfreq = 1000000;
 
-  int k = 0;
-  for (t=1; t <= x / ALPSIZE; ++t){
-    for (j=0 ; j*t <= x; ++j)
-      search[j] = s[t * j];
+  for (t=1; t <= x / (ALPSIZE); ++t){
+    getkey(searchkey, s, t, x);
+    for (j=0 ; j < x; ++j)
+      search[j] = (((s[j] - 'a')+(searchkey[j % t] - 'a')) % ALPSIZE) +'a';
     search[++j] = '\0';
     if ((currentfreq = getfreq(search)) < bestfreq)
       bestfreq = currentfreq, best = t;
+  printf("\n when t = %d the freq is %lf", t, currentfreq);
   }
   return best;
 }
@@ -58,8 +60,7 @@ double getfreq(char t[]){
     chrcount[k]=0;
 
   while (t[j] != '\0')
-    if ((i = t[j++] - 'a') >= 0 && i <= ALPSIZE - 1)
-      chrcount[i]+=1;
+      chrcount[ t[j++] - 'a']+=1;
   for (k=0; k < ALPSIZE; ++k)
     x += (chrcount[k] / j) * (chrcount[k] / j);
   x -= 0.065497;
@@ -106,9 +107,9 @@ double getfreqtwo(char t[]){
     if ((i = t[j++] - 'a') >= 0 && i <= ALPSIZE - 1)
       chrcount[i]+=1;
   for (k=0; k < ALPSIZE; ++k)
-    y += (chrcount[k] / j) * (chrcount[k] / j);
+    y += (chrcount[k] / j) * x[k];
   y -= 0.065497;
-  return x>0 ? x : -x ;
+  return y>0 ? y : -y ;
 }
 
 void getkey(char a[], char b[], int c, int d){
