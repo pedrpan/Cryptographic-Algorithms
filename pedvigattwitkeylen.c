@@ -3,8 +3,7 @@
 #define ALPSIZE 26
 #define KEYLEN 10
 
-int getkeylen(char s[], int x);
-double getfreq(char t[]);
+
 void getkey(char a[], char b[], int c, int d);
 int properform(char s[]);
 
@@ -26,40 +25,7 @@ main()
     printf("%c", (((cypher[p] - 'a')+(key[p % keylen] - 'a')) % ALPSIZE) +'a'  );
 }
 
-int getkeylen(char s[], int x){
-  int t, j, best;
-  char searchkey[x+1];
-  char search[x+1];
-  double currentfreq, bestfreq = 1000000;
 
-  for (t=1; t <= x / (ALPSIZE); ++t){
-    getkey(searchkey, s, t, x);
-    for (j=0 ; j < x; ++j)
-      search[j] = (((s[j] - 'a')+(searchkey[j % t] - 'a')) % ALPSIZE) +'a';
-    search[++j] = '\0';
-    if ((currentfreq = getfreq(search)) < bestfreq)
-      bestfreq = currentfreq, best = t;
-  printf("\n when t = %d the freq is %lf", t, currentfreq);
-  }
-  return best;
-}
-
-double getfreq(char t[]){
-  double chrcount[ALPSIZE];
-  int j = 0;
-  int i, k;
-  double x = 0.0;
-
-  for (k=0; k < ALPSIZE; ++k)
-    chrcount[k]=0;
-
-  while (t[j] != '\0')
-      chrcount[ t[j++] - 'a']+=1;
-  for (k=0; k < ALPSIZE; ++k)
-    x += (chrcount[k] / j) * (chrcount[k] / j);
-  x -= 0.065497;
-  return x>0 ? x : -x ;
-}
 
 double getfreqtwo(char t[]){
   double chrcount[ALPSIZE];
