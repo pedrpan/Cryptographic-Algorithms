@@ -5,7 +5,7 @@
 int getkeylen(char s[], int x);
 double getfreq(char t[]);
 void getkey(char a[], char b[], int c, int d);
-int lowercaseform(char s[]);
+int properform(char s[]);
 
 main()
 {
@@ -17,7 +17,7 @@ main()
   cypher[i-1]='\0';
   printf("The cypher is \n");
   printf(cypher);
-  cyphersize = lowercaseform(cypher);
+  cyphersize = properform(cypher);
   printf("\nThe cypher in proper form is \n");
   printf(cypher);
   keylen = getkeylen(cypher, cyphersize);
@@ -138,7 +138,7 @@ void getkey(char a[], char b[], int c, int d){
 }
 
 
-int lowercaseform(char s[]){
+int properform(char s[]){
   int c, j = 0, i = 0;
 
   while (s[i]!='\0')
