@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int getkeylen(char s[], int x);
-double getfreqsqred(char t[]);
+double getfreq(char t[]);
 
 main()
 {
@@ -23,16 +23,16 @@ int getkeylen(char s[], int x){
 
   int k = 0;
   for (t=1; t <= x / 26; ++t){
-      for (j=0 ; j*t <= x; ++j)
-        search[j] = s[t * j];
-      search[++j] = '\0';
-      if ((currentfreq = getfreqsqred(search)) < bestfreq)
-        bestfreq = currentfreq, best = t;
+    for (j=0 ; j*t <= x; ++j)
+      search[j] = s[t * j];
+    search[++j] = '\0';
+    if ((currentfreq = getfreq(search)) < bestfreq)
+      bestfreq = currentfreq, best = t;
   }
   return best;
 }
 
-double getfreqsqred(char t[]){
+double getfreq(char t[]){
   double chrcount[26];
   int j = 0;
   int i, k;
@@ -45,5 +45,6 @@ double getfreqsqred(char t[]){
       chrcount[i]+=1;
   for (k=0; k < 26; ++k)
     x += (chrcount[k] / j) * (chrcount[k] / j);
+  x -= 0.065;
   return x>0 ? x : -x ;
 }
